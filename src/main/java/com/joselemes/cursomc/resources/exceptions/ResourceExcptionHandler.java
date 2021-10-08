@@ -1,4 +1,4 @@
-package com.joselemes.cursomc.resources.exception;
+package com.joselemes.cursomc.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import com.joselemes.cursomc.service.exceptions.ObjectNotFoundException;
 
+
+/* cursomc */
 @ControllerAdvice
 public class ResourceExcptionHandler {
 

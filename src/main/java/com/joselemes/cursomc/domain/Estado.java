@@ -1,4 +1,5 @@
 package com.joselemes.cursomc.domain;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,43 +10,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Produto implements Serializable {
+public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private Double preço;
 	
-	@ManyToMany(cascade = {
-			CascadeType.PERSIST,
-			CascadeType.MERGE
-	})
-	@JoinTable(
-			name = "PRODUTO_CATEGORIA",
-			joinColumns = @JoinColumn(name = "produto_id"),
-			inverseJoinColumns = @JoinColumn(name = "categoria_id")
-	)
-	@JsonManagedReference
-	private List<Categoria> categorias = new ArrayList<>();
+	@OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonBackReference
+	private List<Cidade> cidades = new ArrayList<>();
 
-	public Produto() {
+	public Estado() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Produto(Integer id, String nome, Double preço) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preço = preço;
 	}
 
 	public Integer getId() {
@@ -64,20 +54,12 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getPreço() {
-		return preço;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setPreço(Double preço) {
-		this.preço = preço;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -93,13 +75,14 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Estado other = (Estado) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", preço=" + preço + "]";
+		return "Estado [id=" + id + ", nome=" + nome + "]";
 	}
+	
 	
 }

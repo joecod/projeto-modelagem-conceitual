@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.joselemes.cursomc.domain.Produto;
 import com.joselemes.cursomc.repositories.ProdutoRepository;
+import com.joselemes.cursomc.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -13,6 +14,7 @@ public class ProdutoService {
 	ProdutoRepository repo;
 	
 	public Produto findById(Integer id) {
-		return repo.findById(id).orElse(null);
+		Produto obj = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Object not found with id = " + id));
+		return obj;
 	}
 }
