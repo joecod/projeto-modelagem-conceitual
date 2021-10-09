@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Categoria implements Serializable{
@@ -25,7 +25,6 @@ public class Categoria implements Serializable{
 	
 	public Categoria() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Categoria(Integer id, String nome) {
@@ -34,8 +33,8 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categorias")
-	@JsonBackReference
 	private List<Produto> produtos = new ArrayList<>();
 
 	public Integer getId() {
